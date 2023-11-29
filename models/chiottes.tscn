@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4hswxvs1c547"]
-
-[ext_resource type="PackedScene" uid="uid://dwildvb5pmmee" path="res://models/chiottes.blend" id="1_elo50"]
-
-[node name="chiottes" instance=ExtResource("1_elo50")]
-
-[node name="StaticBody3D" parent="chiotte" index="0"]
-collision_layer = 2
-collision_mask = 15
