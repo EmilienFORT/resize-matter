@@ -1,8 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://0ms61d7m7yoo"]
-
-[ext_resource type="Texture2D" uid="uid://ba4sq06rudkrl" path="res://textures/hand_hand_texture.png" id="1_66yv1"]
-
-[resource]
-resource_name = "Material"
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_66yv1")
