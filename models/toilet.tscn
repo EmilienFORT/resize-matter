@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dw7sk1dv4b3d6"]
+
+[ext_resource type="PackedScene" uid="uid://0qi1kd5bp1j3" path="res://models/door.tscn" id="1_umsiu"]
+[ext_resource type="PackedScene" uid="uid://b4hswxvs1c547" path="res://models/chiottes.tscn" id="2_7x7lm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a1pa6"]
+size = Vector3(0.1, 3.5, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3qq1"]
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_f71rv"]
+material = SubResource("StandardMaterial3D_b3qq1")
+size = Vector3(0.1, 3.5, 4)
+
+[node name="toilet" type="Node3D"]
+
+[node name="door" parent="." instance=ExtResource("1_umsiu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 2, -0.45)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 1.5)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_a1pa6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_f71rv")
+
+[node name="chiottes" parent="." instance=ExtResource("2_7x7lm")]
+transform = Transform3D(-0.33, 0, -2.88495e-08, 0, 0.33, 0, 2.88495e-08, 0, -0.33, 1, 0, 2.8)

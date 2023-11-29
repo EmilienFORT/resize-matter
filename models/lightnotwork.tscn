@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8vsvok2r2unx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8cqc4"]
+size = Vector3(1, 0.1, 1)
+
+[node name="Lightnotwork" type="MeshInstance3D"]
+transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 0, 0, 0)
+mesh = SubResource("BoxMesh_8cqc4")
+skeleton = NodePath("../../..")

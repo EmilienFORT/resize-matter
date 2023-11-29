@@ -1,0 +1,242 @@
+[gd_scene load_steps=17 format=3 uid="uid://drcydu50giwch"]
+
+[ext_resource type="Script" path="res://scripts/menu_end.gd" id="1_ee0de"]
+[ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="2_3viu4"]
+[ext_resource type="Shader" path="res://shaders/chromatic_aberration.gdshader" id="3_s1hxg"]
+[ext_resource type="Shader" path="res://shaders/glitch.gdshader" id="4_af6hw"]
+[ext_resource type="AudioStream" uid="uid://dsty5h6exrvs1" path="res://SFX/SFX_glitch_tuto.mp3" id="5_oj33w"]
+[ext_resource type="FontFile" uid="uid://cghpjgru88tbo" path="res://UI/LibertySans.ttf" id="6_bqs1l"]
+[ext_resource type="Theme" uid="uid://cidybjfkfi0pc" path="res://UI/UI_theme.tres" id="7_35ivg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmwha"]
+shader = ExtResource("3_s1hxg")
+shader_parameter/r_displacement = Vector2(1, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_egnqr"]
+shader = ExtResource("2_3viu4")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1t0wp"]
+shader = ExtResource("4_af6hw")
+shader_parameter/shake_power = 0.05
+shader_parameter/shake_rate = 1.0
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
+
+[sub_resource type="Animation" id="Animation_ocknj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("glitch_effect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pp61w"]
+resource_name = "button"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("glitch_effect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e3yjm"]
+_data = {
+"RESET": SubResource("Animation_ocknj"),
+"button": SubResource("Animation_pp61w")
+}
+
+[sub_resource type="Animation" id="Animation_xtcjd"]
+resource_name = "white"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("white:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ve552"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("white:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kf4ra"]
+_data = {
+"RESET": SubResource("Animation_ve552"),
+"white": SubResource("Animation_xtcjd")
+}
+
+[node name="menu_end" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ee0de")
+
+[node name="white" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+rect = Rect2(0, 0, 1920, 1080)
+
+[node name="chromatic_ab" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_cmwha")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="."]
+rect = Rect2(0, 0, 1920, 1080)
+
+[node name="vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_egnqr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="."]
+rect = Rect2(0, 0, 1920, 1080)
+
+[node name="glitch_effect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_1t0wp")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="glitch_animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e3yjm")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_oj33w")
+pitch_scale = 2.5
+bus = &"Sound"
+
+[node name="white_animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kf4ra")
+}
+
+[node name="end_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_bqs1l")
+theme_override_font_sizes/font_size = 400
+text = "END"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_menu" type="PanelContainer" parent="menu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 129.0
+offset_top = -216.0
+offset_right = 645.0
+offset_bottom = -108.0
+grow_vertical = 0
+theme = ExtResource("7_35ivg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/main_menu"]
+layout_mode = 2
+alignment = 1
+
+[node name="menuButton" type="Button" parent="menu/main_menu/VBoxContainer"]
+layout_mode = 2
+text = "Return to menu_"
+alignment = 0
+
+[connection signal="pressed" from="menu/main_menu/VBoxContainer/menuButton" to="." method="_on_menu_button_pressed"]
