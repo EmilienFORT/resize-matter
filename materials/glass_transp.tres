@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://busko1jrgioa2"]
+
+[resource]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.188235)
+metallic_specular = 1.0
+roughness = 0.05
+refraction_enabled = true
+refraction_scale = 0.01

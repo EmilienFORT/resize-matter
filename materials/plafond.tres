@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cxcyohq6fme8f"]
+
+[ext_resource type="Texture2D" uid="uid://dt4uh2ijiuqna" path="res://textures/plafond.jpg" id="1_wg1oh"]
+
+[resource]
+albedo_texture = ExtResource("1_wg1oh")
+uv1_triplanar = true
+texture_filter = 0
